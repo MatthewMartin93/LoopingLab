@@ -1,5 +1,7 @@
 #include <iostream>
+#include <random>
 #include <cstdlib>
+#include <stdlib.h>
 using namespace std;
 string days[7];
 string week[7] = {"Sunday","Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
@@ -7,8 +9,16 @@ int supplies = 0;
 int energy = 5;
 int choice;
 int day = 1;
+int randomNum;
+bool guessed = false;
+int guess;
+char give;
+random_device rd;
+uniform_int_distribution<int> dist(100, 999);
+int lockCombination = dist(rd); // Generate the lock combination once
 int main() {
-    //Exercise 1
+    cout << dist(rd) << endl;
+   //Exercise 1
     for (int i = 0; i < 7; i++) {
         cout << "Enter a quote" << endl;
         cin >> days[i];
@@ -50,9 +60,24 @@ int main() {
         }
     }
     //Exercise 3
-    int randomNum = rand() % 899;
-    randomNum += 100;
-    cout << randomNum << endl;
-    
+
+
+    do {
+        cout << "Guess the lock combination" << endl;
+        cin >> guess;
+        if (guess == lockCombination) { // Compare guess with the fixed lock combination
+            guessed = true;
+            cout << "You guessed the combination. The box was empty." << endl;
+        } else {
+            cout << "Your guess was incorrect." << endl;
+            cout << "Give up? (y/n)" << endl;
+            cin >> give;
+            if (give == 'y') {
+                cout << "You gave up." << endl;
+                break;
+            }
+        }
+    } while (!guessed); // Continue until guessed is true
+
     return 0;
 }
