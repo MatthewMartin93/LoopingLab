@@ -1,3 +1,7 @@
+//Matthew Martin
+//Mrs. Alblas
+//11/10/2024
+//Extra: survival game counts days and the lock combination for the chest is random
 #include <iostream>
 #include <random>
 #include <cstdlib>
@@ -13,11 +17,7 @@ int randomNum;
 bool guessed = false;
 int guess;
 char give;
-random_device rd;
-uniform_int_distribution<int> dist(100, 999);
-int lockCombination = dist(rd); // Generate the lock combination once
 int main() {
-    cout << dist(rd) << endl;
    //Exercise 1
     for (int i = 0; i < 7; i++) {
         cout << "Enter a quote" << endl;
@@ -32,6 +32,7 @@ int main() {
         if (energy <= 0) {
             cout << "YOU LOSE" << endl;
             cout << "You survived " << day << " days and collected " << supplies << " supplies." << endl;
+            break;
         }
         cout << endl;
         cout << "Day " << day << endl;
@@ -62,22 +63,15 @@ int main() {
     //Exercise 3
 
 
-    do {
-        cout << "Guess the lock combination" << endl;
+    srand (time(NULL));
+    int guess = 0;
+    int code = rand() % 900 + 100;
+    do
+    {
+        cout << "Please enter your guess" << endl;
         cin >> guess;
-        if (guess == lockCombination) { // Compare guess with the fixed lock combination
-            guessed = true;
-            cout << "You guessed the combination. The box was empty." << endl;
-        } else {
-            cout << "Your guess was incorrect." << endl;
-            cout << "Give up? (y/n)" << endl;
-            cin >> give;
-            if (give == 'y') {
-                cout << "You gave up." << endl;
-                break;
-            }
-        }
-    } while (!guessed); // Continue until guessed is true
+    } while(guess != code);
+    cout << "You have guessed the correct number " << code << endl;
 
     return 0;
 }
